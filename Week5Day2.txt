@@ -1,0 +1,110 @@
+Agenda:
+
+Project Day
+=============
+
+1) How to perform API Testing/Exploratory Testing of API  without documentation
+
+Url:https://uibank.uipath.com/
+Username-FebApiuser
+Password-Eagle@123
+
+
+a) Manually Intercept the API's in browser
+===========================================
+
+1) Open Browser and F12 (Open Dev tools)
+2) Go to Network Tab in Dev tools
+3) Click on Fetch/XHR option to filter APIs
+4) Launch the app -https://uibank.uipath.com/
+5) Login to the account
+6) Click on API's listed under Name
+
+b) Analyze the API's 
+=====================
+
+1) Click on the Headers
+
+https://uibank-api.azurewebsites.net/api/users/login
+Http Method-Post
+Status code-200
+Content Type --application/json
+
+2) Click on payload (Request)
+
+{
+  "username": "FebApiuser",
+  "password": "Eagle@123"
+}
+
+3) Analyze response
+
+
+{
+    "id":"AgREJdc6DMb47fcxxCDILBSVS79w4V9SmFGj7lr6eVQ1KbW2Ez6lZrNyXpIghkEY",
+    "ttl": 1209600,
+    "created": "2023-07-30T10:11:28.846Z",
+    "userId": "64290731ba9f8a0047adacfc"
+}
+
+4) Analyze headers of the subsequent API --Accounts
+
+Authorization:
+AgREJdc6DMb47fcxxCDILBSVS79w4V9SmFGj7lr6eVQ1KbW2Ez6lZrNyXpIghkEY
+
+AgREJdc6DMb47fcxxCDILBSVS79w4V9SmFGj7lr6eVQ1KbW2Ez6lZrNyXpIghkEY
+
+
+ID(key) generated from Login API serves as Auth for other API's
+
+c) Import from Browser and Test the same with Postman
+
+1) Right Click on the API in the displayed list
+2) Copy-->cURL as bash
+3) Click on Import button and paste the cURL
+4) Request will be created
+5) Save the Request in the Collection
+
+d) Implement the same in Makaia Framework
+
+
+https://uibank-api.azurewebsites.net/api/users/login
+https://uibank-api.azurewebsites.net/api/accounts
+
+
+Step 1:
+
+Use extractResponseContent method from RestAssured Base in create incident/isse
+
+sys_Id = extractResponseContent(response,"result.sys_id");
+
+Step 2:
+
+Save the sys_id as a Global variable in PreAndTest
+
+Step 3:
+
+Create a testcase for update inicdent/issue and follow the process for chaining
+
+a) Add depends on method (create)
+b) Append the value of global sys_id in the path parameter of Update Request
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
